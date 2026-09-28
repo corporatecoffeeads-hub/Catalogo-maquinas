@@ -7,6 +7,10 @@
 (function () {
   "use strict";
 
+  // Comparador desactivado por ahora. Para reactivarlo, cambiar a true y
+  // restaurar el enlace «Comparador» en index.html.
+  var ENABLE_COMPARE = false;
+
   var app = document.getElementById("app");
   var byId = {};
   MACHINES.forEach(function (m) { byId[m.id] = m; });
@@ -163,7 +167,7 @@
   function parseRoute() {
     var parts = location.hash.replace(/^#\/?/, "").split("/").filter(Boolean).map(decodeURIComponent);
     if (parts[0] === "maquina" && byId[parts[1]]) return { name: "detail", id: parts[1] };
-    if (parts[0] === "comparar") return { name: "compare", ids: parts.slice(1, 3).filter(function (id) { return byId[id]; }) };
+    if (parts[0] === "comparar" && ENABLE_COMPARE) return { name: "compare", ids: parts.slice(1, 3).filter(function (id) { return byId[id]; }) };
     return { name: "catalog" };
   }
   function go(hash) { if (location.hash === hash) render(); else location.hash = hash; }
@@ -194,28 +198,37 @@
       if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
     });
     var c = document.getElementById("navCount");
+    if (!c) return;
     c.textContent = compare.length; c.hidden = compare.length === 0;
     document.querySelector('[data-nav="compare"]').href = "#/comparar" + (compare.length ? "/" + compare.join("/") : "");
   }
 
+  /* Escala visual: la línea Kalerm usa la E50 Pro como base (displayScale = 1).
+     Las fotos se reducen respecto del tamaño máximo (1,1 = Kalerm Pro). */
+  var MAX_SCALE = 1.1;
+  function imgScale(m) { return m.displayScale ? +(m.displayScale / MAX_SCALE).toFixed(3) : 1; }
+  function visualHeight(m) {
+    var base = MACHINES.filter(function (x) { return x.displayScale === 1; })[0];
+    return m.displayScale && base ? base.specs.dims.h * m.displayScale : m.specs.dims.h;
+  }
+
   /* ---------------- Catálogo ---------------- */
   function renderCatalog() {
-    var heights = MACHINES.map(function (m) { return m.specs.dims.h; });
     var lineup = MACHINES.map(function (m, i) {
-      return '<a class="lineup-item" href="#/maquina/' + m.id + '" style="--h:' + m.specs.dims.h + ";--i:" + i + '">' +
+      return '<a class="lineup-item" href="#/maquina/' + m.id + '" style="--h:' + visualHeight(m) + ";--i:" + i + '">' +
         '<span class="lineup-img"><img src="' + m.image + '" alt="" loading="' + (i < 4 ? "eager" : "lazy") + '" decoding="async"></span>' +
-        '<span class="lineup-label"><strong>' + esc(m.name) + "</strong><span>" + cm(m.specs.dims.h) + " de alto</span></span></a>";
+        '<span class="lineup-label"><strong>' + esc(m.name) + "</strong></span></a>";
     }).join("");
     app.innerHTML =
       '<div class="view">' +
       '<section class="hero"><div class="wrap">' +
         '<div class="hero-grid"><div>' +
           "<h1>Nuestras máquinas de café</h1></div><div>" +
-          '<p class="hero-intro">Equipos automáticos para oficinas, salas de reuniones y espacios corporativos. Revisa las especificaciones de cada modelo, las bebidas que prepara y compáralos lado a lado.</p>' +
+          '<p class="hero-intro">Equipos automáticos para oficinas, salas de reuniones y espacios corporativos. Revisa las especificaciones de cada modelo y las bebidas que prepara.</p>' +
         "</div></div>" +
         '<div class="lineup" aria-label="Las ocho máquinas del catálogo">' +
           '<div class="lineup-scroll"><div class="lineup-track">' + lineup + "</div></div>" +
-          '<p class="lineup-caption">Alturas en proporción a las medidas informadas en cada ficha (entre ' + Math.min.apply(null, heights) + " y " + Math.max.apply(null, heights) + " cm). Selecciona una máquina para ver su ficha.</p>" +
+          '<p class="lineup-caption">Tamaños referenciales. Selecciona una máquina para ver su ficha.</p>' +
         "</div>" +
       "</div></section>" +
 
@@ -318,15 +331,15 @@
     return '<article class="card" id="card-' + m.id + '">' +
       '<a class="stage" href="#/maquina/' + m.id + '" aria-label="Ver ficha técnica de ' + esc(m.name) + '">' +
         '<span class="stage-brand">' + esc(m.brand) + "</span>" +
-        '<img src="' + m.image + '" alt="Fotografía de la ' + esc(m.name) + '" loading="lazy" decoding="async">' +
+        '<img src="' + m.image + '" alt="Fotografía de la ' + esc(m.name) + '" loading="lazy" decoding="async" style="--s:' + imgScale(m) + '">' +
       "</a>" +
       '<div class="card-body">' +
         '<h2><a href="#/maquina/' + m.id + '">' + esc(m.name) + "</a></h2>" +
         '<p class="card-summary">' + esc(m.summary) + "</p>" +
-        '<dl class="facts">' + m.keyFacts.map(function (f) { return "<div><dt>" + esc(f[0]) + "</dt><dd>" + esc(f[1]) + "</dd></div>"; }).join("") + "</dl>" +
+        '<dl class="facts">' + m.keyFacts.map(function (f) { return "<div><dt>" + esc(f[0]) + "</dt><dd>" + val(f[1]) + "</dd></div>"; }).join("") + "</dl>" +
         '<div class="card-actions">' +
           '<a class="btn btn-primary" href="#/maquina/' + m.id + '">Ver ficha técnica</a>' +
-          '<button class="btn btn-ghost" type="button" data-compare="' + m.id + '" aria-pressed="' + on + '">' + (on ? ICON.check + "En el comparador" : ICON.plus + "Agregar al comparador") + "</button>" +
+          (ENABLE_COMPARE ? '<button class="btn btn-ghost" type="button" data-compare="' + m.id + '" aria-pressed="' + on + '">' + (on ? ICON.check + "En el comparador" : ICON.plus + "Agregar al comparador") + "</button>" : "") +
         "</div>" +
       "</div></article>";
   }
@@ -338,7 +351,7 @@
       ["Dimensiones y peso", [["Ancho", cm(s.dims.w)], ["Alto", cm(s.dims.h)], ["Profundidad", cm(s.dims.d)]].concat(s.dimsExtra).concat([["Peso", s.weight]])],
       ["Energía", [["Potencia", s.power], ["Amperaje", s.amperage]]],
       ["Pantalla e interfaz", [["Tipo de pantalla", s.display], ["Interfaz", s.interface], ["Selecciones de bebidas", s.selections]]],
-      ["Capacidad de producción", [["Por hora", s.productionHour], ["Por día", s.productionDay]]],
+      ["Rendimiento", [["Rendimiento diario", s.productionDay], ["Rendimiento por hora", s.productionHour]]],
       ["Café", [["Tipo de café", s.coffeeType], ["Capacidad del contenedor de café", s.coffeeCapacity], ["Contenedores de café", s.coffeeContainers], ["Molino", s.grinder]]],
       ["Productos solubles", [["Contenedores de solubles", s.solubleAvail], ["Cantidad", s.solubleCount], ["Productos", s.solubleTypes], ["Capacidad por contenedor", s.solubleCapacity]]],
       ["Agua y residuos", [["Depósito de agua", s.waterTank], ["Alimentación de agua", s.waterSupply], ["Capacidad de residuos", s.waste], ["Bandeja de aguas residuales", s.wasteTray]]],
@@ -361,13 +374,13 @@
           '<p class="detail-subtitle">' + esc(m.subtitle) + "</p>" +
           '<p class="detail-summary">' + esc(m.summary) + "</p>" +
           '<ul class="highlights">' + m.features.slice(0, 6).map(function (f) { return "<li>" + featureIcon(f) + "<span>" + esc(f) + "</span></li>"; }).join("") + "</ul>" +
-          '<div class="detail-actions">' +
+          (!ENABLE_COMPARE ? "" : '<div class="detail-actions">' +
             '<button class="btn btn-ghost" type="button" id="detailCompare" data-compare="' + m.id + '" aria-pressed="' + on + '">' + (on ? ICON.check + "En el comparador" : ICON.plus + "Agregar al comparador") + "</button>" +
             '<div class="compare-with"><label for="cmpWith">Comparar con</label>' +
               '<select class="select" id="cmpWith"><option value="">Elegir máquina…</option>' +
                 others.map(function (o) { return '<option value="' + o.id + '">' + esc(o.name) + "</option>"; }).join("") +
               "</select></div>" +
-          "</div>" +
+          "</div>") +
         "</div>" +
       "</section>" +
 
@@ -405,8 +418,9 @@
       "</div></div>";
 
     var btn = document.getElementById("detailCompare");
-    btn.addEventListener("click", function () { toggleCompare(m.id); syncCompareBtn(btn); });
-    document.getElementById("cmpWith").addEventListener("change", function (e) {
+    if (btn) btn.addEventListener("click", function () { toggleCompare(m.id); syncCompareBtn(btn); });
+    var cw = document.getElementById("cmpWith");
+    if (cw) cw.addEventListener("change", function (e) {
       if (!e.target.value) return;
       go("#/comparar/" + m.id + "/" + e.target.value);
     });
@@ -454,7 +468,7 @@
     }
     var p = photos[heroPhotoIdx] || photos[0];
     stage.classList.toggle("stage-photo", !p.cutout);
-    stage.innerHTML = '<img id="heroImg" src="' + p.src + '" alt="' + esc(p.alt) + '">';
+    stage.innerHTML = '<img id="heroImg" src="' + p.src + '" alt="' + esc(p.alt) + '"' + (p.cutout ? ' style="--s:' + imgScale(m) + '"' : "") + ">";
     stage.firstChild.addEventListener("click", function () { openLightbox(p.src, p.alt); });
     if (thumbs) thumbs.querySelectorAll("[data-photo]").forEach(function (t) { t.setAttribute("aria-pressed", +t.dataset.photo === heroPhotoIdx); });
     if (cap) cap.textContent = p.cutout ? "Fotografía extraída de la ficha técnica." : "Fotografía real del equipo instalado.";
@@ -740,7 +754,7 @@
   function renderTray() {
     var tray = document.getElementById("tray");
     var r = parseRoute();
-    if (!compare.length || r.name === "compare") { tray.hidden = true; tray.innerHTML = ""; return; }
+    if (!ENABLE_COMPARE || !compare.length || r.name === "compare") { tray.hidden = true; tray.innerHTML = ""; return; }
     var slots = [0, 1].map(function (i) {
       var m = byId[compare[i]];
       if (!m) return '<div class="tray-slot empty-slot">Elige otra máquina</div>';

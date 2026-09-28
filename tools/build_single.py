@@ -20,6 +20,7 @@ vendor = "".join("<script>\n" + (root / "assets/vendor/three" / f).read_text(enc
 vendor += "".join("<script>\n" + (root / "tools/kalerm-e50" / f).read_text(encoding="utf-8") + "\n</script>\n"
                   for f in ["RoundedBoxGeometry.js", "kalerm-e50-builder.js"])
 
+html = re.sub(r'"(assets/img/[^"]+)"', inline, html)
 html = html.replace('<link rel="stylesheet" href="assets/css/styles.css">', "<style>\n" + css + "\n</style>")
 html = html.replace('<script src="assets/js/data.js"></script>', "<script>\n" + data + "\n</script>")
 html = html.replace('<script src="assets/js/viewer3d.js"></script>', vendor + "<script>\n" + viewer + "\n</script>")

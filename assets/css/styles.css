@@ -21,6 +21,7 @@
   --radius: 12px;
   --radius-sm: 8px;
   --wrap: 1240px;
+  --header-h: 84px;
   --ease: cubic-bezier(.2, .7, .2, 1);
   color-scheme: light;
 }
@@ -41,7 +42,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 :root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
-html { scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 80px); -webkit-text-size-adjust: 100%; }
+html { scroll-padding-top: calc(env(safe-area-inset-top, 0px) + var(--header-h) + 16px); -webkit-text-size-adjust: 100%; }
 body {
   margin: 0; background: var(--paper); color: var(--ink);
   font-family: var(--sans); font-size: 1.0625rem; line-height: 1.55;
@@ -66,7 +67,7 @@ p { margin: 0; }
   backdrop-filter: saturate(1.2) blur(12px); -webkit-backdrop-filter: saturate(1.2) blur(12px);
   border-bottom: 1px solid var(--line);
 }
-.header-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 1rem; }
+.header-inner { display: flex; align-items: center; justify-content: space-between; height: var(--header-h); gap: 1rem; }
 .brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; }
 .brand-mark { width: 30px; height: 30px; color: var(--ink); }
 .brand-name { white-space: nowrap; font-family: var(--serif); font-size: 1.35rem; font-weight: 500; letter-spacing: .01em; }
@@ -118,7 +119,7 @@ main { min-height: 70vh; outline: none; }
 }
 
 /* ---------- Toolbar ---------- */
-.toolbar { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 64px); z-index: 20; background: var(--paper); border-bottom: 1px solid var(--line); margin-top: 2rem; }
+.toolbar { position: sticky; top: calc(env(safe-area-inset-top, 0px) + var(--header-h)); z-index: 20; background: var(--paper); border-bottom: 1px solid var(--line); margin-top: 2rem; }
 .toolbar-inner { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1rem; padding: .9rem 0; }
 .search { position: relative; flex: 1 1 260px; max-width: 380px; }
 .search svg { position: absolute; left: .85rem; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; color: var(--muted); }
@@ -301,7 +302,7 @@ model-viewer { width: 100%; aspect-ratio: 4 / 3.4; background: var(--stage); }
 .cmp-empty { aspect-ratio: 1 / .82; border: 1.5px dashed var(--line); border-radius: var(--radius-lg); display: grid; place-items: center; text-align: center; padding: 1.5rem; color: var(--muted); }
 .swap { align-self: center; }
 .swap svg { transform: rotate(90deg); }
-.cmp-controls { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; padding: 1.5rem 0 .5rem; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 64px); background: var(--paper); z-index: 15; border-bottom: 1px solid var(--line); }
+.cmp-controls { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; padding: 1.5rem 0 .5rem; position: sticky; top: calc(env(safe-area-inset-top, 0px) + var(--header-h)); background: var(--paper); z-index: 15; border-bottom: 1px solid var(--line); }
 .switch { display: inline-flex; align-items: center; gap: .6rem; cursor: pointer; font-size: .94rem; }
 .switch input { appearance: none; -webkit-appearance: none; width: 40px; height: 22px; border-radius: 999px; background: var(--line); position: relative; cursor: pointer; transition: background .2s; margin: 0; }
 .switch input::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: transform .2s var(--ease); box-shadow: 0 1px 2px rgba(0,0,0,.2); }
@@ -450,3 +451,18 @@ model-viewer { width: 100%; aspect-ratio: 4 / 3.4; background: var(--stage); }
 .media-caption { font-size: .84rem; color: var(--muted); max-width: 60ch; }
 .viewer-on { background: var(--gold-soft); }
 .viewer-on svg { color: var(--gold-ink); }
+
+/* ---------- Logo, enlace web y escala visual ---------- */
+.brand-logo { height: 62px; width: auto; display: block; }
+:root[data-theme="dark"] .brand-logo { filter: invert(1); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .brand-logo { filter: invert(1); } }
+.nav-web svg { width: 14px; height: 14px; }
+.site-footer a { color: var(--gold-ink); }
+.stage > img { transform: scale(var(--s, 1)); transform-origin: 50% 100%; }
+.card .stage:hover img { transform: scale(calc(var(--s, 1) * 1.03)); }
+.lineup-label { min-height: 2.4em; }
+@media (max-width: 720px) {
+  :root { --header-h: 62px; }
+  .brand-logo { height: 44px; }
+  .main-nav a.nav-web { font-size: .8rem; }
+}
