@@ -1,0 +1,13 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vista previa · Kalerm E50 Pro (modelo procedural)</title>
+<link rel="stylesheet" href="../../assets/css/styles.css">
+<style>body{margin:0}#v{width:100vw;height:100vh}</style></head><body>
+<div id="v"></div>
+<script src="../../assets/vendor/three/three.min.js"></script>
+<script src="RoundedBoxGeometry.js"></script>
+<script src="kalerm-e50-builder.js"></script>
+<script src="../../assets/js/viewer3d.js"></script>
+<script>
+var q = new URLSearchParams(location.search);
+window.viewer = ProductViewer3D.mount(document.getElementById('v'), { build: buildKalermE50, alt: 'Kalerm E50 Pro', vendor: '../../assets/vendor/three/' });
+</script></body></html>

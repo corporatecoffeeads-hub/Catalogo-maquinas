@@ -1,0 +1,20 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Exportar GLB · Kalerm E50 Pro</title></head><body>
+<p id="s">Generando…</p>
+<script src="../../assets/vendor/three/three.min.js"></script>
+<script src="RoundedBoxGeometry.js"></script>
+<script src="GLTFExporter.js"></script>
+<script src="kalerm-e50-builder.js"></script>
+<script>
+// Construye el modelo y lo exporta como GLB binario. Abrir en un navegador descarga el archivo;
+// tools/kalerm-e50/export_glb.py lo automatiza con Playwright.
+window.exportGLB = function () {
+  return new Promise(function (resolve, reject) {
+    var obj = buildKalermE50(THREE);
+    new THREE.GLTFExporter().parse(obj, function (buf) { resolve(buf); }, reject, { binary: true, maxTextureSize: 1024, onlyVisible: true });
+  });
+};
+if (!/automated/.test(location.search)) exportGLB().then(function (buf) {
+  var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([buf], { type: 'model/gltf-binary' }));
+  a.download = 'kalerm-e50-pro.glb'; a.click(); document.getElementById('s').textContent = 'Listo: kalerm-e50-pro.glb';
+});
+</script></body></html>

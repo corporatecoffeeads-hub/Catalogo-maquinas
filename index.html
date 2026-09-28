@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Corporate Coffee · Nuestras máquinas de café</title>
+  <meta name="description" content="Catálogo de máquinas de café para oficinas y espacios corporativos de Corporate Coffee.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%98%95%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <a class="skip" href="#app">Saltar al contenido</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#/" aria-label="Corporate Coffee, ir al catálogo">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M7 13h15v6a7 7 0 0 1-7 7h-1a7 7 0 0 1-7-7v-6Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M22 15h2.2a3 3 0 0 1 0 6H21.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 5c-1.2 1.4 1.2 2.6 0 4M16.5 5c-1.2 1.4 1.2 2.6 0 4" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <span class="brand-name">Corporate Coffee</span>
+      </a>
+      <nav class="main-nav" aria-label="Principal">
+        <a href="#/" data-nav="catalog">Catálogo</a>
+        <a href="#/comparar" data-nav="compare">Comparador <span class="nav-count" id="navCount" hidden>0</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="app" tabindex="-1"></main>
+
+  <aside class="tray" id="tray" aria-label="Máquinas seleccionadas para comparar" hidden></aside>
+
+  <dialog class="lightbox" id="lightbox" aria-label="Imagen ampliada">
+    <div class="lightbox-bar">
+      <p class="lightbox-title" id="lightboxTitle"></p>
+      <button class="icon-btn" type="button" data-close-lightbox aria-label="Cerrar imagen">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="lightbox-body"><img id="lightboxImg" alt=""></div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p>Corporate Coffee · Catálogo informativo de máquinas para oficinas y espacios corporativos.</p>
+      <p class="footer-note">Datos obtenidos de las fichas técnicas de cada equipo. «No especificado» indica que la ficha no informa el dato.</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/viewer3d.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
