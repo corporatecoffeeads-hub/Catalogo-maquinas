@@ -374,6 +374,9 @@
           '<p class="detail-subtitle">' + esc(m.subtitle) + "</p>" +
           '<p class="detail-summary">' + esc(m.summary) + "</p>" +
           '<ul class="highlights">' + m.features.slice(0, 6).map(function (f) { return "<li>" + featureIcon(f) + "<span>" + esc(f) + "</span></li>"; }).join("") + "</ul>" +
+          '<div class="detail-actions"><button class="btn btn-primary btn-office" type="button" id="officeBtn">' +
+            '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h2.2l1.4-2h5.8l1.4 2h2.2A1.5 1.5 0 0 1 20 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>' +
+            "Revisa cómo se vería la máquina en tu oficina</button></div>" +
           (!ENABLE_COMPARE ? "" : '<div class="detail-actions">' +
             '<button class="btn btn-ghost" type="button" id="detailCompare" data-compare="' + m.id + '" aria-pressed="' + on + '">' + (on ? ICON.check + "En el comparador" : ICON.plus + "Agregar al comparador") + "</button>" +
             '<div class="compare-with"><label for="cmpWith">Comparar con</label>' +
@@ -417,6 +420,8 @@
           '<ul class="notes">' + m.notes.map(function (n) { return "<li>" + ICON.note + "<span>" + esc(n) + "</span></li>"; }).join("") + "</ul></section>" : "") +
       "</div></div>";
 
+    var ob = document.getElementById("officeBtn");
+    if (ob && window.OfficePreview) ob.addEventListener("click", function () { OfficePreview.open(m); });
     var btn = document.getElementById("detailCompare");
     if (btn) btn.addEventListener("click", function () { toggleCompare(m.id); syncCompareBtn(btn); });
     var cw = document.getElementById("cmpWith");
@@ -444,7 +449,7 @@
     var has3d = !!m.media.model3d, photos = heroPhotos(m);
     var tabs = has3d ? '<div class="media-tabs" role="tablist" aria-label="Tipo de visualización">' +
       '<button type="button" role="tab" id="tab-3d" data-hero="3d" aria-controls="heroStage">Vista 3D</button>' +
-      '<button type="button" role="tab" id="tab-photos" data-hero="photos" aria-controls="heroStage">Fotografías</button></div>' : "";
+      '<button type="button" role="tab" id="tab-photos" data-hero="photos" aria-controls="heroStage">Fotografía</button></div>' : "";
     var thumbs = photos.length > 1 ? '<div class="thumbs" id="heroThumbs" role="group" aria-label="Fotografías">' + photos.map(function (p, i) {
       return '<button type="button" class="thumb' + (p.cutout ? " cutout" : "") + '" data-photo="' + i + '" aria-label="' + esc(p.alt) + '"><img src="' + p.src + '" alt="" loading="lazy"></button>';
     }).join("") + "</div>" : "";

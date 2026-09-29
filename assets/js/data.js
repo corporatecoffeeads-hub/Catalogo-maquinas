@@ -177,12 +177,7 @@ var MACHINES = [
       model3dBuild: "buildKalermE50",   // si el constructor está cargado (versión de un archivo) se usa en lugar del GLB
       model3dNote: "Modelo 3D reconstruido a partir de fotografías reales y de las medidas de la ficha técnica (31 × 58 × 53 cm). Los detalles no visibles en las fotografías son aproximados.",
       spin360: [],
-      photos: [
-        { src: "assets/img/photos/e50-foto-frontal.webp", alt: "Kalerm E50 Pro instalada, vista frontal" },
-        { src: "assets/img/photos/e50-foto-lateral-izquierda.webp", alt: "Kalerm E50 Pro, lateral izquierdo con ventana del estanque de agua" },
-        { src: "assets/img/photos/e50-foto-lateral-derecha.webp", alt: "Kalerm E50 Pro, lateral derecho y cubierta superior" },
-        { src: "assets/img/photos/e50-foto-posterior.webp", alt: "Kalerm E50 Pro, esquina posterior con ventilación y conexión eléctrica" }
-      ]
+      photos: []
     }
   },
 
