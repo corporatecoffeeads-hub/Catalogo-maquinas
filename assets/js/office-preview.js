@@ -106,7 +106,7 @@
   }
   function msg(t) { $("#opMsg").textContent = t || ""; }
 
-  function open(m) {
+  function open(m, mode) {
     if (!dlg) build();
     st = { m: m, photo: null, cut: null, adj: null, size: START.size, cx: START.cx, bottom: START.bottom, flip: false, light: 1, shadow: true };
     $("#opRefImg").src = m.image; $("#opGhost").src = m.image;
@@ -122,6 +122,8 @@
     img.src = m.image;
     $('[data-op="share"]').hidden = !(navigator.canShare && window.File);
     if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
+    if (mode === "camera") startCamera();
+    else if (mode === "upload") $("#opFile").click();
   }
   function close() { if (dlg.open) dlg.close(); else cleanup(); }
   function cleanup() { stopCamera(); }

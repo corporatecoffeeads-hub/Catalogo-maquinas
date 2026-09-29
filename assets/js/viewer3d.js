@@ -146,7 +146,7 @@
       camera = new T.PerspectiveCamera(30, 1, 0.01, 50);
 
       var key = new T.DirectionalLight(0xffffff, 1.5);
-      key.position.set(0.55, 2.6, 0.9);
+      key.position.set(0.3, 3.0, 0.6);
       key.castShadow = !opts.safe;
       key.shadow.mapSize.set(1024, 1024);
       key.shadow.camera.left = -1; key.shadow.camera.right = 1; key.shadow.camera.top = 1; key.shadow.camera.bottom = -1;
@@ -156,7 +156,7 @@
       var rim = new T.DirectionalLight(0xffffff, 0.8); rim.position.set(-1.4, 1.2, -1.2); scene.add(rim);
       scene.add(new T.HemisphereLight(0xffffff, 0xbdb8b0, 0.35));
 
-      var ground = new T.Mesh(new T.PlaneGeometry(6, 6), new T.ShadowMaterial({ opacity: 0.2 }));
+      var ground = new T.Mesh(new T.PlaneGeometry(6, 6), new T.ShadowMaterial({ opacity: 0.14 }));
       ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
 
       controls = new T.OrbitControls(camera, renderer.domElement);
@@ -193,8 +193,8 @@
       model = obj;
       model.traverse(function (o) {
         if (!o.isMesh) return;
-        o.castShadow = true; o.receiveShadow = true;
-        if (o.name === "display" || (o.material && o.material.name === "display")) o.material.toneMapped = false;
+        o.castShadow = !/^logo/.test(o.name); o.receiveShadow = true;
+        if (/^display|^led|^logo_corporate/.test(o.name) || (o.material && /^(display|led|logo_corporate)/.test(o.material.name))) o.material.toneMapped = false;
         if (o.material && o.material.transmission > 0) {
           var m = o.material, op = { contenedor_ahumado: 0.3, tapa_ahumada: 0.45, ventana_estanque: 0.82, estanque_agua: 0.35, tubo_leche: 0.85 }[m.name] || 0.4;
           m.transmission = 0; m.transparent = true; m.opacity = op; m.depthWrite = false; m.needsUpdate = true;

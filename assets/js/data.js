@@ -19,10 +19,10 @@ var MACHINES = [
     image: "assets/img/machines/kalerm-1601.webp",
     ficha: "assets/img/fichas/kalerm-1601-ficha.webp",
     tags: { coffee: "grano", milk: "liquida", touch: true, solubles: false, waterNetwork: false, bidon: false },
-    displayScale: 0.8,   // escala visual estándar Kalerm (E50 Pro = 1)
+    displayScale: 0.8,   // escala visual en el catálogo (Kalerm E50 Pro = 1)
     keyFacts: [
       ["Café", "En grano, tolva de 250 g"],
-      ["Rendimiento", "20 a 30 tazas por hora"],
+      ["Rendimiento", "Hasta 80 tazas por día"],
       ["Solubles", "Sin solubles"]
     ],
     specs: {
@@ -34,7 +34,7 @@ var MACHINES = [
       display: NE,
       interface: "Panel touch, sistema One Touch y navegación intuitiva",
       productionHour: "20 a 30 tazas por hora",
-      productionDay: NE,
+      productionDay: "Hasta 80 tazas por día",
       coffeeType: "Café en grano (la ficha indica molinillo de precisión)",
       coffeeCapacity: "250 g",
       coffeeContainers: "1 contenedor de café",
@@ -48,8 +48,8 @@ var MACHINES = [
       wasteTray: "1 L (bandeja de aguas residuales)",
       waterSupply: "Depósito de agua de 1,8 L",
       milkSystem: "Succión de leche líquida",
-      milkLiquid: "Sí, succión de leche líquida",
-      milkPowder: NE,
+      milkLiquid: "Compatible",
+      milkPowder: "No",
       cleaning: "Autolimpieza",
       selections: NE,
       other: ["Sistema de calentamiento dual"]
@@ -59,7 +59,13 @@ var MACHINES = [
     notes: [
       "La ficha informa las dimensiones como «Ancho × Alto × Largo». El valor «Largo» (45 cm) se presenta como profundidad."
     ],
-    media: { model3d: null, spin360: [] }
+    media: {
+      model3d: "assets/models/kalerm-1601.glb",
+      model3dBuild: "buildKalerm1601",
+      model3dNote: "Modelo 3D reconstruido a partir de la fotografía de la ficha técnica y de sus medidas (33 × 40 × 45 cm). Los costados, la parte superior y la parte posterior son aproximados.",
+      spin360: [],
+      photos: []
+    }
   },
 
   /* ------------------------------------------------------------ 2 */
@@ -72,10 +78,10 @@ var MACHINES = [
     image: "assets/img/machines/kalerm-pro.webp",
     ficha: "assets/img/fichas/kalerm-pro-ficha.webp",
     tags: { coffee: "grano", milk: "liquida", touch: true, solubles: false, waterNetwork: false, bidon: true },
-    displayScale: 1.1,   // escala visual estándar Kalerm (E50 Pro = 1)
+    displayScale: 0.9,   // escala visual en el catálogo (Kalerm E50 Pro = 1)
     keyFacts: [
       ["Café", "En grano, tolva de 750 g"],
-      ["Rendimiento", "30 a 40 tazas por día"],
+      ["Rendimiento", "Hasta 80 tazas por día"],
       ["Solubles", "Sin solubles"]
     ],
     specs: {
@@ -87,7 +93,7 @@ var MACHINES = [
       display: NE,
       interface: "Panel touch, sistema One Touch y navegación intuitiva",
       productionHour: NE,
-      productionDay: "30 a 40 tazas por día",
+      productionDay: "Hasta 80 tazas por día",
       coffeeType: "Café en grano",
       coffeeCapacity: "750 g (recipiente de granos de café)",
       coffeeContainers: "1 recipiente de granos",
@@ -101,8 +107,8 @@ var MACHINES = [
       wasteTray: "2 L (bandeja de aguas residuales)",
       waterSupply: "Depósito de agua de 1,8 L y conexión a bidón",
       milkSystem: "Succión de leche líquida",
-      milkLiquid: "Sí, succión de leche líquida",
-      milkPowder: NE,
+      milkLiquid: "Compatible",
+      milkPowder: "No",
       cleaning: "Autolimpieza",
       selections: NE,
       other: ["Sistema de calentamiento dual", "Conexión a bidón"]
@@ -114,7 +120,13 @@ var MACHINES = [
       "El peso informado (17 kg) es igual al de la Kalerm 1601, aunque la altura informada es 75 cm frente a 40 cm. Se recomienda verificar con el proveedor.",
       "El rendimiento se informa por día (30 a 40 tazas); la Kalerm 1601 lo informa por hora. Se conservan las unidades originales."
     ],
-    media: { model3d: null, spin360: [] }
+    media: {
+      model3d: "assets/models/kalerm-pro.glb",
+      model3dBuild: "buildKalermPro",
+      model3dNote: "Modelo 3D reconstruido a partir de la fotografía de la ficha técnica. Los costados y la parte posterior son aproximados.",
+      spin360: [],
+      photos: []
+    }
   },
 
   /* ------------------------------------------------------------ 3 */
@@ -123,14 +135,14 @@ var MACHINES = [
     name: "Kalerm E50 Pro",
     brand: "Kalerm",
     subtitle: "Máquina automática de café para oficinas y espacios corporativos",
-    summary: "Máquina automática de café en grano con pantalla touch de 7\", sistema de leche con espuma cremosa y rendimiento recomendado de 50 a 80 tazas por día.",
+    summary: "Máquina automática de café en grano con pantalla touch de 7\", sistema de leche con espuma cremosa y rendimiento de hasta 80 tazas por día.",
     image: "assets/img/machines/kalerm-e50-pro.webp",
     ficha: "assets/img/fichas/kalerm-e50-pro-ficha.webp",
     tags: { coffee: "grano", milk: "liquida", touch: true, solubles: false, waterNetwork: false, bidon: false },
-    displayScale: 1.0,   // escala visual estándar Kalerm (E50 Pro = 1)
+    displayScale: 1.0,   // escala visual en el catálogo (Kalerm E50 Pro = 1)
     keyFacts: [
       ["Café", "En grano, tolva de 750 g"],
-      ["Rendimiento", "50 a 80 tazas por día"],
+      ["Rendimiento", "Hasta 80 tazas por día"],
       ["Solubles", "Sin solubles"]
     ],
     specs: {
@@ -147,7 +159,7 @@ var MACHINES = [
       display: "Pantalla touch de 7\"",
       interface: "Panel de operación simple",
       productionHour: NE,
-      productionDay: "50 a 80 tazas por día (recomendado)",
+      productionDay: "Hasta 80 tazas por día",
       coffeeType: "Café en grano",
       coffeeCapacity: "750 g",
       coffeeContainers: "1 contenedor de granos",
@@ -161,8 +173,8 @@ var MACHINES = [
       wasteTray: "2 L (bandeja de aguas residuales)",
       waterSupply: "Depósito de agua de 3,5 L aprox.",
       milkSystem: "Sistema de leche con espuma de leche cremosa. Refrigerador de leche indicado en la ficha para leche refrigerada.",
-      milkLiquid: "Sistema de leche; la ficha contempla refrigerador para leche refrigerada",
-      milkPowder: NE,
+      milkLiquid: "Compatible",
+      milkPowder: "No",
       cleaning: "Sistema de autolimpieza",
       selections: NE,
       other: ["Considerar el ancho del refrigerador si el cliente desea la leche refrigerada (nota de la ficha)"]
@@ -187,12 +199,13 @@ var MACHINES = [
     name: "Pilot Soluble",
     brand: "Pilot",
     subtitle: "Máquina de café soluble automática para oficinas y espacios corporativos de alta demanda",
-    summary: "Máquina de café soluble para alta demanda con 4 canisters solubles, pantalla LCD de 10,1\" y rendimiento recomendado de hasta 300 tazas por día.",
+    summary: "Máquina de café soluble para alta demanda con 4 canisters solubles, pantalla LCD de 10,1\" y rendimiento de hasta 300 tazas por día.",
     image: "assets/img/machines/pilot-soluble.webp",
     ficha: "assets/img/fichas/pilot-soluble-ficha.webp",
     tags: { coffee: "soluble", milk: "soluble", touch: false, solubles: true, waterNetwork: true, bidon: true },
+    displayScale: 1.2,   // escala visual en el catálogo (Kalerm E50 Pro = 1)
     keyFacts: [
-      ["Café", "Soluble, tolva no especificada"],
+      ["Café", "Soluble, tolva de 1 kg"],
       ["Rendimiento", "Hasta 300 tazas por día"],
       ["Solubles", "3 solubles (leche, chocolate y vainilla)"]
     ],
@@ -205,11 +218,11 @@ var MACHINES = [
       display: "Pantalla LCD de 10,1\" (muestra videos corporativos o imágenes)",
       interface: "7 botones de selección",
       productionHour: NE,
-      productionDay: "Hasta 300 tazas por día (recomendado)",
+      productionDay: "Hasta 300 tazas por día",
       coffeeType: "Café soluble",
-      coffeeCapacity: NE,
+      coffeeCapacity: "1 kg",
       coffeeContainers: "1 canister de café soluble (4 canisters en total)",
-      grinder: NE + " (equipo de café soluble)",
+      grinder: "No",
       solubleAvail: "Sí",
       solubleCount: "4 canisters",
       solubleTypes: "Café, leche, chocolate y té/vainilla (todos solubles)",
@@ -218,10 +231,10 @@ var MACHINES = [
       waste: NE,
       wasteTray: NE,
       waterSupply: "Conexión directa a red de agua; uso con bidón de agua purificada",
-      milkSystem: "Leche soluble (canister de leche)",
-      milkLiquid: NE,
-      milkPowder: "Sí, canister de leche soluble",
-      cleaning: NE,
+      milkSystem: "Leche en polvo (soluble)",
+      milkLiquid: "No compatible",
+      milkPowder: "Sí",
+      cleaning: "Sí",
       selections: "7 botones de selección",
       other: ["Fácil mantenimiento", "Funcionamiento sencillo", "Alta capacidad para espacios corporativos"]
     },
@@ -241,10 +254,11 @@ var MACHINES = [
     name: "Pilot Espresso",
     brand: "Pilot",
     subtitle: "Máquina de café automática para oficinas y espacios corporativos de alta demanda",
-    summary: "Máquina de café en grano para alta demanda, con pantalla LCD de 10,1\" para videos o imágenes corporativas y rendimiento recomendado de hasta 300 tazas por día.",
+    summary: "Máquina de café en grano para alta demanda, con pantalla LCD de 10,1\" para videos o imágenes corporativas y rendimiento de hasta 300 tazas por día.",
     image: "assets/img/machines/pilot-espresso.webp",
     ficha: "assets/img/fichas/pilot-espresso-ficha.webp",
     tags: { coffee: "grano", milk: "soluble", touch: false, solubles: true, waterNetwork: true, bidon: true },
+    displayScale: 1.3,   // escala visual en el catálogo (Kalerm E50 Pro = 1)
     keyFacts: [
       ["Café", "En grano, tolva de 1,2 kg"],
       ["Rendimiento", "Hasta 300 tazas por día"],
@@ -259,11 +273,11 @@ var MACHINES = [
       display: "Pantalla LCD de 10,1\" (muestra videos corporativos o imágenes)",
       interface: "7 botones de selección",
       productionHour: NE,
-      productionDay: "Hasta 300 tazas por día (recomendado)",
+      productionDay: "Hasta 300 tazas por día",
       coffeeType: "Café en grano",
       coffeeCapacity: "1,2 kg (contenedor de granos)",
       coffeeContainers: "1 contenedor de granos",
-      grinder: NE,
+      grinder: "Sí",
       solubleAvail: "Sí",
       solubleCount: "2 contenedores",
       solubleTypes: "Leche y chocolate",
@@ -272,10 +286,10 @@ var MACHINES = [
       waste: NE,
       wasteTray: NE,
       waterSupply: "Conexión directa a red de agua; uso con bidón de agua purificada",
-      milkSystem: "Leche soluble (contenedor de leche)",
-      milkLiquid: NE,
-      milkPowder: "Sí, contenedor de leche soluble",
-      cleaning: NE,
+      milkSystem: "Leche en polvo (soluble)",
+      milkLiquid: "No compatible",
+      milkPowder: "Sí",
+      cleaning: "Sí",
       selections: "7 botones de selección",
       other: ["Fácil mantenimiento", "Funcionamiento sencillo", "Alta capacidad para espacios corporativos"]
     },
@@ -298,9 +312,10 @@ var MACHINES = [
     image: "assets/img/machines/necta-solista.webp",
     ficha: "assets/img/fichas/necta-solista-ficha.webp",
     tags: { coffee: "grano", milk: "soluble", touch: false, solubles: true, waterNetwork: false, bidon: false },
+    displayScale: 1.4,   // escala visual en el catálogo (Kalerm E50 Pro = 1)
     keyFacts: [
       ["Café", "En grano, tolva de 1,2 kg"],
-      ["Rendimiento", "No especificado"],
+      ["Rendimiento", "Hasta 300 tazas por día"],
       ["Solubles", "3 solubles (leche, chocolate y vainilla)"]
     ],
     specs: {
@@ -312,11 +327,11 @@ var MACHINES = [
       display: "Display gráfico de 128 × 64 píxeles",
       interface: "10 botones de selección directa, iluminación LED en la interfaz",
       productionHour: NE,
-      productionDay: NE,
+      productionDay: "Hasta 300 tazas por día",
       coffeeType: "Café en grano",
       coffeeCapacity: "1,2 kg",
       coffeeContainers: "1 canister de café en grano (5 canisters en total)",
-      grinder: NE,
+      grinder: "Sí",
       solubleAvail: "Sí",
       solubleCount: "4 canisters",
       solubleTypes: "Chocolate, leche, cappuccino vainilla y té",
@@ -325,10 +340,10 @@ var MACHINES = [
       waste: NE,
       wasteTray: NE,
       waterSupply: NE,
-      milkSystem: "Leche soluble (canister de leche)",
-      milkLiquid: NE,
-      milkPowder: "Sí, canister de leche soluble",
-      cleaning: NE,
+      milkSystem: "Leche en polvo (soluble)",
+      milkLiquid: "No compatible",
+      milkPowder: "Sí",
+      cleaning: "Sí",
       selections: "Hasta 10 selecciones de bebidas",
       other: ["Dosificadores programables", "Diseño moderno y compacto"]
     },
@@ -337,7 +352,13 @@ var MACHINES = [
     notes: [
       "La ficha informa las dimensiones como «Ancho × Alto × Largo». El valor «Largo» (56,4 cm) se presenta como profundidad."
     ],
-    media: { model3d: null, spin360: [] }
+    media: {
+      model3d: "assets/models/necta-solista.glb",
+      model3dBuild: "buildNectaSolista",
+      model3dNote: "Modelo 3D reconstruido a partir de la fotografía de la ficha técnica (41 × 75 × 56,4 cm). Los costados, la parte superior y la parte posterior son aproximados.",
+      spin360: [],
+      photos: []
+    }
   },
 
   /* ------------------------------------------------------------ 7 */
@@ -350,9 +371,10 @@ var MACHINES = [
     image: "assets/img/machines/krea-espresso.webp",
     ficha: "assets/img/fichas/krea-espresso-ficha.webp",
     tags: { coffee: "grano", milk: "soluble", touch: false, solubles: true, waterNetwork: false, bidon: false },
+    displayScale: 1.4,   // escala visual en el catálogo (Kalerm E50 Pro = 1)
     keyFacts: [
       ["Café", "En grano, tolva de 1,2 kg"],
-      ["Rendimiento", "No especificado"],
+      ["Rendimiento", "Hasta 300 tazas por día"],
       ["Solubles", "3 solubles (leche, chocolate y vainilla)"]
     ],
     specs: {
@@ -364,11 +386,11 @@ var MACHINES = [
       display: "Display gráfico de 128 × 64 píxeles",
       interface: "10 botones de selección directa, iluminación LED en la interfaz",
       productionHour: NE,
-      productionDay: NE,
+      productionDay: "Hasta 300 tazas por día",
       coffeeType: "Café en grano",
       coffeeCapacity: "1,2 kg",
       coffeeContainers: "1 canister de café en grano (4 canisters en total)",
-      grinder: NE,
+      grinder: "Sí",
       solubleAvail: "Sí",
       solubleCount: "3 canisters",
       solubleTypes: "Leche, chocolate y té",
@@ -377,10 +399,10 @@ var MACHINES = [
       waste: NE,
       wasteTray: NE,
       waterSupply: NE,
-      milkSystem: "Leche soluble (canister de leche)",
-      milkLiquid: NE,
-      milkPowder: "Sí, canister de leche soluble",
-      cleaning: NE,
+      milkSystem: "Leche en polvo (soluble)",
+      milkLiquid: "No compatible",
+      milkPowder: "Sí",
+      cleaning: "Sí",
       selections: "Hasta 10 selecciones de bebidas",
       other: ["Iluminación LED en área de recogida", "Máquina de sobremesa", "Dosificadores programables", "Diseño moderno y compacto"]
     },
@@ -390,7 +412,13 @@ var MACHINES = [
       "La ficha titula el equipo «Krea Espresso»; en la fotografía se observan los logotipos KREA y NECTA. Se clasifica bajo la marca Necta.",
       "La ficha informa las dimensiones como «Ancho × Alto × Largo». El valor «Largo» (56,4 cm) se presenta como profundidad."
     ],
-    media: { model3d: null, spin360: [] }
+    media: {
+      model3d: "assets/models/krea-espresso.glb",
+      model3dBuild: "buildKreaEspresso",
+      model3dNote: "Modelo 3D reconstruido a partir de la fotografía de la ficha técnica (41 × 75 × 56,4 cm). Los costados, la parte superior y la parte posterior son aproximados.",
+      spin360: [],
+      photos: []
+    }
   },
 
   /* ------------------------------------------------------------ 8 */
@@ -399,13 +427,14 @@ var MACHINES = [
     name: "Necta Krea Touch",
     brand: "Necta",
     subtitle: "Máquina automática de café y bebidas calientes para oficinas y espacios corporativos",
-    summary: "Café en grano y bebidas calientes con pantalla touch HD de 7\", 3 contenedores de solubles y producción de hasta 100 tazas por hora.",
+    summary: "Café en grano y bebidas calientes con pantalla touch HD de 7\", 3 contenedores de solubles y rendimiento de hasta 300 tazas por día.",
     image: "assets/img/machines/necta-krea-touch.webp",
     ficha: "assets/img/fichas/necta-krea-touch-ficha.webp",
     tags: { coffee: "grano", milk: "soluble", touch: true, solubles: true, waterNetwork: false, bidon: false },
+    displayScale: 1.4,   // escala visual en el catálogo (Kalerm E50 Pro = 1)
     keyFacts: [
       ["Café", "En grano, tolva de 1,2 kg"],
-      ["Rendimiento", "Hasta 100 tazas por hora"],
+      ["Rendimiento", "Hasta 300 tazas por día"],
       ["Solubles", "3 solubles (leche, chocolate y vainilla)"]
     ],
     specs: {
@@ -417,11 +446,11 @@ var MACHINES = [
       display: "Pantalla touch HD de 7\"",
       interface: "Hasta 10 selecciones por pantalla",
       productionHour: "Hasta 100 tazas por hora",
-      productionDay: NE,
+      productionDay: "Hasta 300 tazas por día",
       coffeeType: "Café en grano",
       coffeeCapacity: "1,2 kg",
       coffeeContainers: "1 contenedor de café en grano (4 contenedores en total)",
-      grinder: NE,
+      grinder: "Sí",
       solubleAvail: "Sí",
       solubleCount: "3 contenedores",
       solubleTypes: "Descafeinado, chocolate y leche",
@@ -430,10 +459,10 @@ var MACHINES = [
       waste: NE,
       wasteTray: NE,
       waterSupply: NE,
-      milkSystem: "Leche soluble (contenedor de leche)",
-      milkLiquid: NE,
-      milkPowder: "Sí, contenedor de leche soluble",
-      cleaning: NE,
+      milkSystem: "Leche en polvo (soluble)",
+      milkLiquid: "No compatible",
+      milkPowder: "Sí",
+      cleaning: "Sí",
       selections: "Hasta 10 selecciones por pantalla",
       other: ["Caldera compacta de 500 cc", "Superficies negro brillante", "Diseño moderno y elegante"]
     },
@@ -442,6 +471,12 @@ var MACHINES = [
     notes: [
       "La ficha informa las dimensiones como «Ancho × Alto × Largo». El valor «Largo» (57 cm) se presenta como profundidad."
     ],
-    media: { model3d: null, spin360: [] }
+    media: {
+      model3d: "assets/models/necta-krea-touch.glb",
+      model3dBuild: "buildNectaKreaTouch",
+      model3dNote: "Modelo 3D reconstruido a partir de la fotografía de la ficha técnica y de la documentación pública del fabricante (41 × 75 × 57 cm). Los costados y la parte posterior son aproximados.",
+      spin360: [],
+      photos: []
+    }
   }
 ];

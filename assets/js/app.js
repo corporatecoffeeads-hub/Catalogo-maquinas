@@ -205,7 +205,7 @@
 
   /* Escala visual: la línea Kalerm usa la E50 Pro como base (displayScale = 1).
      Las fotos se reducen respecto del tamaño máximo (1,1 = Kalerm Pro). */
-  var MAX_SCALE = 1.1;
+  var MAX_SCALE = Math.max.apply(null, MACHINES.map(function (m) { return m.displayScale || 1; }));
   function imgScale(m) { return m.displayScale ? +(m.displayScale / MAX_SCALE).toFixed(3) : 1; }
   function visualHeight(m) {
     var base = MACHINES.filter(function (x) { return x.displayScale === 1; })[0];
@@ -223,7 +223,7 @@
       '<div class="view">' +
       '<section class="hero"><div class="wrap">' +
         '<div class="hero-grid"><div>' +
-          "<h1>Nuestras máquinas de café</h1></div><div>" +
+          "<h1>Nuestras máquinas</h1></div><div>" +
           '<p class="hero-intro">Equipos automáticos para oficinas, salas de reuniones y espacios corporativos. Revisa las especificaciones de cada modelo y las bebidas que prepara.</p>' +
         "</div></div>" +
         '<div class="lineup" aria-label="Las ocho máquinas del catálogo">' +
@@ -345,20 +345,26 @@
   }
 
   /* ---------------- Ficha individual ---------------- */
+  // Especificaciones ordenadas en tarjetas con filas homogéneas
+  function stripP(v) { return isNE(v) || Array.isArray(v) ? v : String(v).replace(/\s*\([^)]*\)/g, "").trim(); }
   function specGroups(m) {
-    var s = m.specs;
+    var s = m.specs, isK = m.brand === "Kalerm", grano = m.tags.coffee === "grano";
+    var solF = m.keyFacts.filter(function (f) { return f[0] === "Solubles"; })[0], sol = solF ? solF[1] : NE;
+    var dims = [["Ancho", cm(s.dims.w)], ["Alto", cm(s.dims.h)], ["Profundidad", cm(s.dims.d)], ["Peso", s.weight]]
+      .concat(s.dimsExtra.map(function (x) { return [x[0], x[1]]; }));
     return [
-      ["Dimensiones y peso", [["Ancho", cm(s.dims.w)], ["Alto", cm(s.dims.h)], ["Profundidad", cm(s.dims.d)]].concat(s.dimsExtra).concat([["Peso", s.weight]])],
-      ["Energía", [["Potencia", s.power], ["Amperaje", s.amperage]]],
-      ["Pantalla e interfaz", [["Tipo de pantalla", s.display], ["Interfaz", s.interface], ["Selecciones de bebidas", s.selections]]],
-      ["Rendimiento", [["Rendimiento diario", s.productionDay], ["Rendimiento por hora", s.productionHour]]],
-      ["Café", [["Tipo de café", s.coffeeType], ["Capacidad del contenedor de café", s.coffeeCapacity], ["Contenedores de café", s.coffeeContainers], ["Molino", s.grinder]]],
-      ["Productos solubles", [["Contenedores de solubles", s.solubleAvail], ["Cantidad", s.solubleCount], ["Productos", s.solubleTypes], ["Capacidad por contenedor", s.solubleCapacity]]],
-      ["Agua y residuos", [["Depósito de agua", s.waterTank], ["Alimentación de agua", s.waterSupply], ["Capacidad de residuos", s.waste], ["Bandeja de aguas residuales", s.wasteTray]]],
-      ["Sistema de leche", [["Sistema de leche", s.milkSystem], ["Leche líquida", s.milkLiquid], ["Leche en polvo o soluble", s.milkPowder]]],
-      ["Otras características", [["Sistema de limpieza", s.cleaning], ["Otras", s.other]]]
+      ["Dimensiones y peso", dims],
+      ["Rendimiento", [["Diario", stripP(s.productionDay)]]],
+      ["Café", [["Tipo", grano ? "Grano" : "Soluble"], ["Capacidad de la tolva", stripP(s.coffeeCapacity)], ["Molino", grano ? "Sí, incorporado" : "No"]]],
+      ["Solubles", [["Configuración", sol], ["Capacidad por contenedor", sol === "Sin solubles" ? "No aplica" : stripP(s.solubleCapacity)]]],
+      ["Leche", [["Leche líquida", isK ? "Compatible" : "No compatible"], ["Leche en polvo (soluble)", isK ? "No" : "Sí"]]],
+      ["Agua y residuos", [["Depósito de agua", stripP(s.waterTank)], ["Alimentación de agua", s.waterSupply], ["Contenedor de residuos", stripP(s.waste)], ["Bandeja de aguas residuales", stripP(s.wasteTray)]]],
+      ["Pantalla y operación", [["Pantalla", stripP(s.display)], ["Controles", s.interface]]],
+      ["Energía", [["Potencia", s.power]]],
+      ["Limpieza y otras características", [["Sistema de limpieza", isK ? "Sí, autolimpieza" : "Sí"], ["Otras características", s.other]], true]
     ];
   }
+
 
   function renderDetail(m) {
     var on = inCompare(m.id);
@@ -373,10 +379,12 @@
           "<h1>" + esc(m.name) + "</h1>" +
           '<p class="detail-subtitle">' + esc(m.subtitle) + "</p>" +
           '<p class="detail-summary">' + esc(m.summary) + "</p>" +
+          '<div class="office-cta">' +
+            '<div class="office-cta-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h2.2l1.4-2h5.8l1.4 2h2.2A1.5 1.5 0 0 1 20 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></div>' +
+            '<div class="office-cta-text"><strong>Revisa cómo se vería la máquina en tu oficina</strong><span>Toma o sube una foto de tu espacio y ubica la máquina en segundos.</span></div>' +
+            '<div class="office-cta-actions"><button type="button" class="btn office-btn-main" data-office="camera">Tomar foto</button><button type="button" class="btn office-btn-alt" data-office="upload">Subir foto</button></div>' +
+          "</div>" +
           '<ul class="highlights">' + m.features.slice(0, 6).map(function (f) { return "<li>" + featureIcon(f) + "<span>" + esc(f) + "</span></li>"; }).join("") + "</ul>" +
-          '<div class="detail-actions"><button class="btn btn-primary btn-office" type="button" id="officeBtn">' +
-            '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h2.2l1.4-2h5.8l1.4 2h2.2A1.5 1.5 0 0 1 20 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>' +
-            "Revisa cómo se vería la máquina en tu oficina</button></div>" +
           (!ENABLE_COMPARE ? "" : '<div class="detail-actions">' +
             '<button class="btn btn-ghost" type="button" id="detailCompare" data-compare="' + m.id + '" aria-pressed="' + on + '">' + (on ? ICON.check + "En el comparador" : ICON.plus + "Agregar al comparador") + "</button>" +
             '<div class="compare-with"><label for="cmpWith">Comparar con</label>' +
@@ -389,9 +397,12 @@
 
       '<section class="section" aria-labelledby="h-specs"><div class="section-head"><h2 id="h-specs">Especificaciones técnicas</h2>' +
         '<p class="section-note">«No especificado» indica que la ficha técnica no informa el dato; no significa que la función no exista.</p></div>' +
-        '<div class="spec-groups">' + specGroups(m).map(function (g) {
-          return '<div class="spec-group"><h3>' + g[0] + '</h3><dl class="spec-list">' +
-            g[1].map(function (r) { return "<div><dt>" + esc(r[0]) + "</dt><dd>" + val(r[1]) + "</dd></div>"; }).join("") + "</dl></div>";
+        '<div class="spec-grid">' + specGroups(m).map(function (g) {
+          return '<div class="spec-card' + (g[2] ? " wide" : "") + '"><h3>' + g[0] + '</h3><dl class="spec-rows">' +
+            g[1].map(function (r) {
+              var v = Array.isArray(r[1]) && r[1].length ? "<ul>" + r[1].map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>" : val(r[1]);
+              return "<div><dt>" + esc(r[0]) + "</dt><dd>" + v + "</dd></div>";
+            }).join("") + "</dl></div>";
         }).join("") + "</div></section>" +
 
       '<section class="section" aria-labelledby="h-drinks"><div class="section-head"><h2 id="h-drinks">Bebidas disponibles</h2>' +
@@ -401,11 +412,8 @@
       '<section class="section" aria-labelledby="h-feat"><div class="section-head"><h2 id="h-feat">Características destacadas</h2></div>' +
         '<ul class="features">' + m.features.map(function (f) { return "<li>" + featureIcon(f) + "<span>" + esc(f) + "</span></li>"; }).join("") + "</ul></section>" +
 
-      '<section class="section" aria-labelledby="h-media"><div class="section-head"><h2 id="h-media">Fotografía y visualización</h2></div>' +
+      '<section class="section" aria-labelledby="h-media"><div class="section-head"><h2 id="h-media">Visualización y ficha técnica</h2></div>' +
         '<div class="media-grid">' +
-          '<div class="media-card"><div class="stage"><img src="' + m.image + '" alt="Fotografía de la ' + esc(m.name) + '" loading="lazy"></div>' +
-            '<div class="media-card-body"><div><h3>Fotografía del equipo</h3><p>Extraída de la ficha técnica.</p></div>' +
-            '<button class="btn btn-ghost" type="button" data-zoom="photo">Ampliar</button></div></div>' +
           '<div class="media-card">' + viewerHTML(m) +
             '<div class="media-card-body"><div><h3>Vista 360° o modelo 3D</h3><p>' + (m.media.model3d ? "Modelo 3D interactivo disponible." : m.media.spin360.length ? "Arrastra para girar el equipo." : "Pendiente de material fotográfico o modelo 3D.") + "</p></div>" +
               (m.media.model3d ? '<button class="btn btn-ghost" type="button" id="open3d">Abrir vista 3D</button>' : "") + "</div></div>" +
@@ -414,14 +422,11 @@
             '<button class="btn btn-ghost" type="button" data-zoom="ficha">Ver ficha</button></div></div>' +
         "</div></section>" +
 
-      (m.notes.length ?
-        '<section class="section" aria-labelledby="h-notes"><div class="section-head"><h2 id="h-notes">Observaciones para revisión</h2>' +
-          '<p class="section-note">Diferencias o datos por confirmar detectados en la ficha. Se muestran tal como aparecen, sin corregirlos.</p></div>' +
-          '<ul class="notes">' + m.notes.map(function (n) { return "<li>" + ICON.note + "<span>" + esc(n) + "</span></li>"; }).join("") + "</ul></section>" : "") +
       "</div></div>";
 
-    var ob = document.getElementById("officeBtn");
-    if (ob && window.OfficePreview) ob.addEventListener("click", function () { OfficePreview.open(m); });
+    app.querySelectorAll("[data-office]").forEach(function (b) {
+      b.addEventListener("click", function () { if (window.OfficePreview) OfficePreview.open(m, b.dataset.office); });
+    });
     var btn = document.getElementById("detailCompare");
     if (btn) btn.addEventListener("click", function () { toggleCompare(m.id); syncCompareBtn(btn); });
     var cw = document.getElementById("cmpWith");
@@ -473,7 +478,7 @@
     }
     var p = photos[heroPhotoIdx] || photos[0];
     stage.classList.toggle("stage-photo", !p.cutout);
-    stage.innerHTML = '<img id="heroImg" src="' + p.src + '" alt="' + esc(p.alt) + '"' + (p.cutout ? ' style="--s:' + imgScale(m) + '"' : "") + ">";
+    stage.innerHTML = '<img id="heroImg" src="' + p.src + '" alt="' + esc(p.alt) + '">';
     stage.firstChild.addEventListener("click", function () { openLightbox(p.src, p.alt); });
     if (thumbs) thumbs.querySelectorAll("[data-photo]").forEach(function (t) { t.setAttribute("aria-pressed", +t.dataset.photo === heroPhotoIdx); });
     if (cap) cap.textContent = p.cutout ? "Fotografía extraída de la ficha técnica." : "Fotografía real del equipo instalado.";

@@ -1,0 +1,15 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Exportar GLB</title></head><body>
+<!-- Uso automatizado desde export_glb.py: export.html?b=<carpeta/archivo-builder.js>&fn=<función> -->
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="kalerm-e50/RoundedBoxGeometry.js"></script>
+<script src="kalerm-e50/GLTFExporter.js"></script>
+<script src="model-kit.js"></script>
+<script>
+var q = new URLSearchParams(location.search);
+window.ready = new Promise(function (res) { var s = document.createElement('script'); s.src = q.get('b'); s.onload = res; document.body.appendChild(s); });
+window.exportGLB = function () {
+  return window.ready.then(function () { return ModelKit.logoReady; }).then(function () { return new Promise(function (resolve, reject) {
+    new THREE.GLTFExporter().parse(window[q.get('fn')](THREE), resolve, reject, { binary: true, maxTextureSize: 1024 });
+  }); });
+};
+</script></body></html>

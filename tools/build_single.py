@@ -17,13 +17,15 @@ viewer = (root / "assets/js/viewer3d.js").read_text(encoding="utf-8")
 vendor = "".join("<script>\n" + (root / "assets/vendor/three" / f).read_text(encoding="utf-8") + "\n</script>\n"
                  for f in ["three.min.js", "OrbitControls.js", "RoomEnvironment.js", "GLTFLoader.js"])
 # El modelo de la E50 Pro se construye en el navegador (sin fetch ni blobs): compatible con CSP estrictas
-vendor += "".join("<script>\n" + (root / "tools/kalerm-e50" / f).read_text(encoding="utf-8") + "\n</script>\n"
-                  for f in ["RoundedBoxGeometry.js", "kalerm-e50-builder.js"])
+for f in ["kalerm-e50/RoundedBoxGeometry.js", "model-kit.js", "kalerm-e50/kalerm-e50-builder.js"] + sorted(
+        str(p.relative_to(root / "tools")) for p in (root / "tools").glob("*/*-builder.js") if p.parent.name != "kalerm-e50"):
+    vendor += "<script>\n" + (root / "tools" / f).read_text(encoding="utf-8") + "\n</script>\n"
 
 html = re.sub(r'"(assets/img/[^"]+)"', inline, html)
 html = html.replace('<link rel="stylesheet" href="assets/css/styles.css">', "<style>\n" + css + "\n</style>")
 html = html.replace('<script src="assets/js/data.js"></script>', "<script>\n" + data + "\n</script>")
 html = html.replace('<script src="assets/js/viewer3d.js"></script>', vendor + "<script>\n" + viewer + "\n</script>")
+html = html.replace('<script src="assets/js/office-preview.js"></script>', "<script>\n" + (root / "assets/js/office-preview.js").read_text(encoding="utf-8") + "\n</script>")
 html = html.replace('<script src="assets/js/app.js"></script>', "<script>\n" + app + "\n</script>")
 out = root / "dist" / "corporate-coffee.html"
 out.parent.mkdir(exist_ok=True)

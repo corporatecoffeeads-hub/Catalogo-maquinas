@@ -53,7 +53,6 @@ La ficha de la Kalerm E50 Pro abre con un visor 3D interactivo y permite alterna
 assets/models/kalerm-e50-pro.glb      Modelo 3D (≈1,9 MB; geometría propia, materiales PBR y texturas incrustadas)
 assets/js/viewer3d.js                 Componente reutilizable ProductViewer3D
 assets/vendor/three/                  Three.js r147 local (licencia MIT), se carga solo al abrir el visor
-assets/img/photos/                    Fotografías reales de la E50 Pro
 tools/kalerm-e50/                     Fuente del modelo: constructor procedural, vista previa y exportador GLB
 ```
 
@@ -77,6 +76,17 @@ python3 tools/kalerm-e50/export_glb.py
 
 El GLB también se puede abrir en Blender (Archivo → Importar → glTF 2.0) para refinarlo y volver a exportarlo con el mismo nombre.
 
+### Modelos adicionales (Necta Krea Touch y siguientes)
+
+Los modelos nuevos usan utilidades comunes (`tools/model-kit.js`) y herramientas genéricas:
+
+```bash
+# vista previa
+http://localhost:8000/tools/preview.html?b=necta-krea-touch/necta-krea-touch-builder.js&fn=buildNectaKreaTouch
+# exportar GLB
+python3 tools/export_glb.py necta-krea-touch/necta-krea-touch-builder.js buildNectaKreaTouch necta-krea-touch.glb
+```
+
 ### Agregar un modelo 3D a otra máquina
 
 En `assets/js/data.js`, dentro de `media`:
@@ -91,6 +101,10 @@ media: {
 ```
 
 La ficha mostrará automáticamente las pestañas «Vista 3D» y «Fotografías». Se recomiendan modelos GLB con el eje Y hacia arriba, el frente mirando a +Z y escala en metros. Para una secuencia fotográfica real de 360° use `spin360` (24–36 fotos alrededor del equipo).
+
+## «Revisa cómo se vería la máquina en tu oficina»
+
+Cada ficha tiene este botón (`assets/js/office-preview.js`). El cliente toma una foto con la cámara, con la máquina como guía de encuadre, o sube una imagen. Luego mueve la máquina, ajusta tamaño, luz, sombra y orientación, y descarga o comparte el montaje. La foto se procesa solo en el navegador: no se sube a ningún servidor. La cámara en vivo requiere HTTPS (GitHub Pages lo cumple). Si no está disponible, se usa el selector de archivos, que en celulares también permite tomar la foto.
 
 ## Fotografías
 

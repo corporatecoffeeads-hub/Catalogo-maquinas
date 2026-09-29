@@ -15,7 +15,7 @@
   --gold-soft: #f5ede1;
   --a: #1d1c1a;
   --b: #a47a3f;
-  --serif: "Bodoni Moda", "Bodoni 72", Didot, "Didot LT STD", Georgia, serif;
+  --serif: "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;   /* títulos: sans legible */
   --sans: "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --radius-lg: 22px;
   --radius: 12px;
@@ -506,3 +506,37 @@ model-viewer { width: 100%; aspect-ratio: 4 / 3.4; background: var(--stage); }
   .op-stage canvas { max-height: 52vh; }
   .op-cam { max-height: 60vh; }
 }
+
+/* ---------- Llamado destacado «en tu oficina» ---------- */
+.office-cta { margin-top: 1.5rem; display: grid; grid-template-columns: auto 1fr; gap: .9rem 1rem; align-items: center; padding: 1.1rem 1.2rem; border-radius: 16px; background: #1d1c1a; color: #f4f1ec; box-shadow: 0 10px 30px rgba(0,0,0,.14); }
+.office-cta-icon { width: 48px; height: 48px; border-radius: 12px; display: grid; place-items: center; background: rgba(201,160,99,.16); color: #d8b37a; }
+.office-cta-icon svg { width: 26px; height: 26px; }
+.office-cta-text strong { display: block; font-family: var(--serif); font-weight: 500; font-size: 1.28rem; line-height: 1.2; }
+.office-cta-text span { display: block; margin-top: .25rem; font-size: .9rem; color: #c9c3ba; }
+.office-cta-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: .6rem; }
+.office-btn-main { background: #c9a063; color: #1d1c1a; font-weight: 600; }
+.office-btn-main:hover { background: #d8b37a; }
+.office-btn-alt { background: transparent; color: #f4f1ec; border-color: rgba(255,255,255,.35); }
+.office-btn-alt:hover { border-color: #fff; }
+
+/* ---------- Especificaciones en tarjetas ---------- */
+.spec-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; align-items: start; }
+.spec-card { background: var(--surface); border-radius: var(--radius); padding: 1.1rem 1.25rem .4rem; }
+.spec-card.wide { grid-column: 1 / -1; }
+.spec-card h3 { font-family: var(--sans); font-size: .82rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--gold-ink); margin-bottom: .4rem; }
+.spec-rows { margin: 0; }
+.spec-rows div { display: grid; grid-template-columns: minmax(0, 45%) minmax(0, 1fr); gap: 1rem; padding: .62rem 0; border-top: 1px solid var(--line); font-size: .95rem; }
+.spec-rows div:first-child { border-top: 0; }
+.spec-rows dt { color: var(--muted); }
+.spec-rows dd { margin: 0; font-weight: 500; }
+.spec-rows dd ul { margin: 0; padding-left: 1.1rem; font-weight: 400; }
+.media-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 720px) {
+  .spec-grid, .media-grid { grid-template-columns: minmax(0, 1fr); }
+  .office-cta-actions .btn { flex: 1; }
+}
+
+/* ---------- Títulos más legibles ---------- */
+h1, h2, h3 { font-weight: 600; letter-spacing: -0.025em; line-height: 1.1; }
+.hero h1 { font-weight: 700; letter-spacing: -0.035em; }
+.card h2 { font-size: 1.45rem; }

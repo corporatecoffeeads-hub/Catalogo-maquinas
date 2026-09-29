@@ -395,6 +395,9 @@
     rod.add(new THREE.LineCurve3(new THREE.Vector3(0.2, bodyTop + 6.9, hz + 7.3), p2));
     add(new THREE.TubeGeometry(rod, 40, 0.28, 12, false), mat.steel, 0, 0, 0, "varilla");
 
+    // Logotipo Corporate Coffee en la cubierta superior (zona trasera derecha)
+    if (window.ModelKit) ModelKit(THREE, root).logo(10.7, bodyTop + 0.04, -14, 6.6);
+
     // Centrar en X/Z y escalar a metros
     root.traverse(function (o) { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
     var wrap = new THREE.Group(); wrap.name = "Kalerm_E50_Pro_root";
