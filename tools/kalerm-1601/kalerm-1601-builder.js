@@ -95,9 +95,18 @@
       add(rbox(wing, TOP - 6.2, WF - BACK, 2.2, 3), M.shell, s * (W / 2 - wing / 2), (TOP + 6.2) / 2, (WF + BACK) / 2, s < 0 ? "costado_izq" : "costado_der");
     });
     [-1, 1].forEach(function (s) { add(rbox(wing, 7, 26.5, 1.2), M.shell, s * (W / 2 - wing / 2), 4.4, BACK + 13.25, "costado_inferior"); });
+    // Estanque de agua en el costado izquierdo (se retira hacia arriba)
+    var tankM = K.mat.phys({ name: "estanque_agua", color: 0x6c737b, roughness: 0.12, metalness: 0, transmission: 0.6, thickness: 0.8 });
+    add(rbox(0.6, 26, 31, 1.2), tankM, -W / 2 - 0.15, 22.4, -2.5, "estanque_agua");
+    add(rbox(0.4, 26.8, 31.8, 1.4), M.slot, -W / 2 + 0.05, 22.4, -2.5, "marco_estanque");
+    add(rbox(0.5, 16, 1.4, 0.6), M.slot, -W / 2 - 0.3, 23, -13.5, "agarre_estanque");
+    add(rbox(0.3, 0.25, 26, 0.1), K.mat.std({ name: "nivel_agua", color: 0x55606b, roughness: 0.4 }), -W / 2 - 0.35, 16, -1, "nivel_agua");
     // Columna central negra brillante
     var cw = W - 2 * wing + 0.4;
-    add(rbox(cw, TOP - 6.2, CF + 2, 0.8), M.piano, 0, (TOP + 6.2) / 2, CF / 2 - 1, "columna_central");
+    // parte superior (panel) y nicho inferior para el vaso o la taza (fondo en z = 9)
+    var nicheTop = 21.5, nicheBack = 9;
+    add(rbox(cw, TOP - nicheTop, CF + 2, 0.8), M.piano, 0, (TOP + nicheTop) / 2, CF / 2 - 1, "columna_central");
+    add(rbox(cw, nicheTop - 6.2, nicheBack + 2, 0.6), M.piano, 0, (nicheTop + 6.2) / 2, nicheBack / 2 - 1, "fondo_nicho_taza");
     add(rbox(cw + 0.2, 1.4, 2 * WF, 0.6), M.matte, 0, TOP - 0.6, 0, "techo_central");
 
     // Panel táctil y display
@@ -112,14 +121,14 @@
     var rim = add(new THREE.TorusGeometry(2.05, 0.14, 10, 48), M.chrome, 0, 29.9, CF + 3.0, "aro_perilla");
     add(new THREE.CylinderGeometry(0.9, 0.9, 0.3, 32), M.chrome, 0, 29.9, CF + 3.85, "centro_perilla").rotation.x = Math.PI / 2;
     // cabezal ajustable de las boquillas
-    add(rbox(7.2, 2.4, 5, 1), M.alu, 0, 22.6, CF + 1.8, "cabezal_boquillas");
-    [-1, 1].forEach(function (s) { add(new THREE.CylinderGeometry(0.4, 0.32, 1, 18), M.chrome, s * 1.1, 21, CF + 2.2, "boquilla"); });
-    add(new THREE.CylinderGeometry(0.34, 0.3, 1.2, 18), M.steel, 0, 20.9, CF + 3.3, "boquilla_leche");
+    add(rbox(7.2, 2.4, 5.4, 1), M.alu, 0, 21.0, 17.6, "cabezal_boquillas");
+    [-1, 1].forEach(function (s) { add(new THREE.CylinderGeometry(0.4, 0.32, 1, 18), M.chrome, s * 1.1, 19.4, 17.2, "boquilla"); });
+    add(new THREE.CylinderGeometry(0.34, 0.3, 1.2, 18), M.steel, 0, 19.3, 18.9, "boquilla_leche");
 
     /* ---------------- Bandeja de goteo ---------------- */
     var tray = add(K.profile([[4, trayTop], [21.6, trayTop], [22.5, trayTop - 0.9], [22.5, 1.6], [21.4, 0.6], [4, 0.6]], 31.2, 0.45), M.piano, 0, 0, 0, "bandeja_goteo");
     var bars = [];
-    for (var b = 0; b < 3; b++) bars.push(placed(rbox(26, 0.28, 0.5, 0.12), 0, trayTop + 0.6, CF + 0.9 + b * 1.0));
+    for (var b = 0; b < 13; b++) bars.push(placed(rbox(cw - 1.2, 0.28, 0.45, 0.12), 0, trayTop + 0.6, 9.8 + b * 1.0));   // rejilla del nicho
     bars.push(placed(rbox(26, 0.25, 0.25, 0.1), 0, trayTop - 1.4, 23.05), placed(rbox(26, 0.25, 0.25, 0.1), 0, trayTop - 2.6, 23.05), placed(rbox(26, 0.25, 0.25, 0.1), 0, trayTop - 3.8, 23.05));
     add(merge(bars), M.chrome, 0, 0, 0, "rejilla_bandeja");
     add(rbox(0.5, 0.5, 0.3, 0.15), M.steel, 14, trayTop - 1.2, 23.05, "indicador_flotador");
