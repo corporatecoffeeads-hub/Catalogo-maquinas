@@ -137,6 +137,7 @@ var MACHINES = [
     subtitle: "Máquina automática de café para oficinas y espacios corporativos",
     summary: "Máquina automática de café en grano con pantalla touch de 7\", sistema de leche con espuma cremosa y rendimiento de hasta 80 tazas por día.",
     image: "assets/img/machines/kalerm-e50-pro.webp",
+    officeImage: "assets/img/front/kalerm-e50-pro-frontal.webp",   // vista frontal para «en tu oficina» (render del modelo 3D)
     ficha: "assets/img/fichas/kalerm-e50-pro-ficha.webp",
     tags: { coffee: "grano", milk: "liquida", touch: true, solubles: false, waterNetwork: false, bidon: false },
     displayScale: 1.0,   // escala visual en el catálogo (Kalerm E50 Pro = 1)

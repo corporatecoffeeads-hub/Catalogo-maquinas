@@ -60,14 +60,7 @@
         /* Paso 3: montaje */
         '<section class="op-step" data-step="edit" hidden>' +
           '<div class="op-stage"><canvas id="opCanvas" aria-label="Montaje de la máquina en tu foto. Arrastra para mover la máquina."></canvas></div>' +
-          '<p class="op-hint">Arrastra la máquina para ubicarla. Pellizca, usa la rueda del mouse o el control de tamaño para ajustarla. <span id="opHintDims"></span></p>' +
-          '<div class="op-controls">' +
-            '<label class="op-range">Tamaño<input type="range" id="opSize" min="8" max="95" step="0.5"></label>' +
-            '<label class="op-range">Luz<input type="range" id="opLight" min="55" max="145" step="1" value="100"></label>' +
-            '<label class="switch"><input type="checkbox" id="opShadow" checked> Sombra</label>' +
-            '<button type="button" class="btn btn-ghost op-small" data-op="flip">Voltear</button>' +
-            '<button type="button" class="btn btn-ghost op-small" data-op="reset">Restablecer</button>' +
-          "</div>" +
+          '<p class="op-hint">Arrastra la máquina si necesitas moverla. <span id="opHintDims"></span></p>' +
           '<div class="op-actions">' +
             '<button type="button" class="btn btn-primary" data-op="download">Descargar imagen</button>' +
             '<button type="button" class="btn btn-ghost" data-op="share" hidden>Compartir</button>' +
@@ -85,8 +78,6 @@
       else if (op === "camera") startCamera();
       else if (op === "shoot") shoot();
       else if (op === "back") { stopCamera(); step("start"); }
-      else if (op === "flip") { st.flip = !st.flip; draw(); }
-      else if (op === "reset") { place(); $("#opLight").value = 100; st.light = 1; adjustCutout(); draw(); }
       else if (op === "download") download();
       else if (op === "share") share();
       else if (op === "change") { step("start"); }
@@ -94,9 +85,6 @@
     dlg.addEventListener("close", cleanup);
     $("#opFile").addEventListener("change", onFile);
     $("#opCapture").addEventListener("change", onFile);
-    $("#opSize").addEventListener("input", function (e) { st.size = +e.target.value; draw(); });
-    $("#opLight").addEventListener("input", function (e) { st.light = e.target.value / 100; adjustCutout(); draw(); });
-    $("#opShadow").addEventListener("change", function (e) { st.shadow = e.target.checked; draw(); });
     bindCanvas();
   }
 
@@ -108,18 +96,18 @@
 
   function open(m, mode) {
     if (!dlg) build();
-    st = { m: m, photo: null, cut: null, adj: null, size: START.size, cx: START.cx, bottom: START.bottom, flip: false, light: 1, shadow: true };
-    $("#opRefImg").src = m.image; $("#opGhost").src = m.image;
+    st = { m: m, photo: null, cut: null, adj: null, size: START.size, cx: START.cx, bottom: START.bottom, flip: false, light: 1, shadow: false };   // foto tal cual: sin sombra ni ajustes
+    var front = m.officeImage || m.image;   // vista frontal de la máquina
+    $("#opRefImg").src = front; $("#opGhost").src = front;
     $("#opRefName").textContent = m.name;
     $("#opRefDims").textContent = dimsText(m);
     $("#opHintDims").textContent = "Referencia: la " + m.name + " mide " + String(m.specs.dims.h).replace(".", ",") + " cm de alto y " + String(m.specs.dims.w).replace(".", ",") + " cm de ancho.";
-    $("#opShadow").checked = true; $("#opLight").value = 100;
     $("#opGhost").style.height = START.size + "%";
     $("#opGhost").style.bottom = (100 - START.bottom * 100) + "%";
     msg(""); step("start");
     var img = new Image();
     img.onload = function () { st.cut = img; adjustCutout(); };
-    img.src = m.image;
+    img.src = front;
     $('[data-op="share"]').hidden = !(navigator.canShare && window.File);
     if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
     if (mode === "camera") startCamera();
@@ -181,8 +169,6 @@
   function place() {
     st.size = START.size; st.cx = START.cx; st.bottom = START.bottom; st.flip = false;
     // en fotos verticales la máquina parte algo más pequeña respecto del alto
-    if (st.photo && st.photo.height > st.photo.width) st.size = START.size * 0.75;
-    $("#opSize").value = st.size;
   }
 
   /* ---------------- Ajuste de luz de la máquina ---------------- */
@@ -266,7 +252,7 @@
       if (!(e.pointerId in pts)) return;
       pts[e.pointerId] = toPhoto(e);
       var ids = Object.keys(pts), q = geom();
-      if (pinch && ids.length === 2) {
+      if (false && pinch && ids.length === 2) {   // sin ajuste de tamaño
         var a = pts[ids[0]], b = pts[ids[1]], d = Math.hypot(a.x - b.x, a.y - b.y);
         setSize(pinch.size * d / pinch.d);
       } else if (last && ids.length === 1) {
@@ -278,9 +264,8 @@
     });
     function up(e) { delete pts[e.pointerId]; if (Object.keys(pts).length < 2) pinch = null; if (!Object.keys(pts).length) last = null; }
     cv.addEventListener("pointerup", up); cv.addEventListener("pointercancel", up);
-    cv.addEventListener("wheel", function (e) { if (!st || !st.photo) return; e.preventDefault(); setSize(st.size * (e.deltaY < 0 ? 1.05 : 0.95)); }, { passive: false });
   }
-  function setSize(v) { st.size = Math.max(8, Math.min(95, v)); $("#opSize").value = st.size; draw(); }
+
 
   /* ---------------- Exportar ---------------- */
   function render(cb) {
