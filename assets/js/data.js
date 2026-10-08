@@ -246,7 +246,13 @@ var MACHINES = [
       "Los rótulos visibles en el panel de la fotografía (por ejemplo, «Black», «Milk», «Hot Water», «Latte Macchiato») no coinciden totalmente con el listado de bebidas de la ficha.",
       "La ficha informa las dimensiones como «Ancho × Alto × Largo». El valor «Largo» (60 cm) se presenta como profundidad."
     ],
-    media: { model3d: null, spin360: [] }
+    media: {
+      model3d: "assets/models/pilot-soluble.glb",
+      model3dBuild: "buildPilotSoluble",
+      model3dNote: "Modelo 3D con el diseño Corporate Coffee de la ficha técnica y proporciones según fotografías del fabricante (33 × 65 × 60 cm). La parte posterior es aproximada.",
+      spin360: [],
+      photos: []
+    }
   },
 
   /* ------------------------------------------------------------ 5 */
@@ -300,7 +306,13 @@ var MACHINES = [
       "La ficha indica «7 botones de selección», pero en la fotografía del panel se observan 8 selecciones rotuladas, incluida «Hot Water», que no figura en el listado de bebidas.",
       "La ficha informa las dimensiones como «Ancho × Alto × Largo». El valor «Largo» (60 cm) se presenta como profundidad."
     ],
-    media: { model3d: null, spin360: [] }
+    media: {
+      model3d: "assets/models/pilot-espresso.glb",
+      model3dBuild: "buildPilotEspresso",
+      model3dNote: "Modelo 3D con el diseño Corporate Coffee de la ficha técnica y proporciones según fotografías del fabricante (33 × 80 × 60 cm). Los costados y la parte posterior son aproximados.",
+      spin360: [],
+      photos: []
+    }
   },
 
   /* ------------------------------------------------------------ 6 */
