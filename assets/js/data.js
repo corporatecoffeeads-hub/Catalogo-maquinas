@@ -18,6 +18,7 @@ var MACHINES = [
     summary: "Máquina automática compacta de 40 cm de alto, con molinillo de precisión, sistema One Touch y succión de leche líquida.",
     image: "assets/img/machines/kalerm-1601.webp",
     ficha: "assets/img/fichas/kalerm-1601-ficha.webp",
+    tutorialUrl: "",   // enlace de YouTube del video tutorial (vacío = «Próximamente»)
     tags: { coffee: "grano", milk: "liquida", touch: true, solubles: false, waterNetwork: false, bidon: false },
     displayScale: 0.8,   // escala visual en el catálogo (Kalerm E50 Pro = 1)
     keyFacts: [
@@ -77,6 +78,7 @@ var MACHINES = [
     summary: "Máquina automática de 75 cm de alto con recipiente de granos de 750 g, succión de leche líquida y conexión a bidón.",
     image: "assets/img/machines/kalerm-pro.webp",
     ficha: "assets/img/fichas/kalerm-pro-ficha.webp",
+    tutorialUrl: "",   // enlace de YouTube del video tutorial (vacío = «Próximamente»)
     tags: { coffee: "grano", milk: "liquida", touch: true, solubles: false, waterNetwork: false, bidon: true },
     displayScale: 0.9,   // escala visual en el catálogo (Kalerm E50 Pro = 1)
     keyFacts: [
@@ -139,6 +141,7 @@ var MACHINES = [
     image: "assets/img/machines/kalerm-e50-pro.webp",
     officeImage: "assets/img/front/kalerm-e50-pro-frontal.webp",   // vista frontal para «en tu oficina» (render del modelo 3D)
     ficha: "assets/img/fichas/kalerm-e50-pro-ficha.webp",
+    tutorialUrl: "",   // enlace de YouTube del video tutorial (vacío = «Próximamente»)
     tags: { coffee: "grano", milk: "liquida", touch: true, solubles: false, waterNetwork: false, bidon: false },
     displayScale: 1.0,   // escala visual en el catálogo (Kalerm E50 Pro = 1)
     keyFacts: [
@@ -203,6 +206,7 @@ var MACHINES = [
     summary: "Máquina de café soluble para alta demanda con 4 canisters solubles, pantalla LCD de 10,1\" y rendimiento de hasta 300 tazas por día.",
     image: "assets/img/machines/pilot-soluble.webp",
     ficha: "assets/img/fichas/pilot-soluble-ficha.webp",
+    tutorialUrl: "",   // enlace de YouTube del video tutorial (vacío = «Próximamente»)
     tags: { coffee: "soluble", milk: "soluble", touch: false, solubles: true, waterNetwork: true, bidon: true },
     displayScale: 1.2,   // escala visual en el catálogo (Kalerm E50 Pro = 1)
     keyFacts: [
@@ -264,6 +268,7 @@ var MACHINES = [
     summary: "Máquina de café en grano para alta demanda, con pantalla LCD de 10,1\" para videos o imágenes corporativas y rendimiento de hasta 300 tazas por día.",
     image: "assets/img/machines/pilot-espresso.webp",
     ficha: "assets/img/fichas/pilot-espresso-ficha.webp",
+    tutorialUrl: "",   // enlace de YouTube del video tutorial (vacío = «Próximamente»)
     tags: { coffee: "grano", milk: "soluble", touch: false, solubles: true, waterNetwork: true, bidon: true },
     displayScale: 1.3,   // escala visual en el catálogo (Kalerm E50 Pro = 1)
     keyFacts: [
@@ -324,6 +329,7 @@ var MACHINES = [
     summary: "Café en grano y bebidas calientes con 4 canisters de solubles, incluido cappuccino vainilla, y 10 selecciones directas.",
     image: "assets/img/machines/necta-solista.webp",
     ficha: "assets/img/fichas/necta-solista-ficha.webp",
+    tutorialUrl: "",   // enlace de YouTube del video tutorial (vacío = «Próximamente»)
     tags: { coffee: "grano", milk: "soluble", touch: false, solubles: true, waterNetwork: false, bidon: false },
     displayScale: 1.4,   // escala visual en el catálogo (Kalerm E50 Pro = 1)
     keyFacts: [
@@ -383,6 +389,7 @@ var MACHINES = [
     summary: "Máquina de sobremesa para café en grano y bebidas calientes, con 3 canisters de solubles (leche, chocolate y té) y 10 selecciones directas.",
     image: "assets/img/machines/krea-espresso.webp",
     ficha: "assets/img/fichas/krea-espresso-ficha.webp",
+    tutorialUrl: "",   // enlace de YouTube del video tutorial (vacío = «Próximamente»)
     tags: { coffee: "grano", milk: "soluble", touch: false, solubles: true, waterNetwork: false, bidon: false },
     displayScale: 1.4,   // escala visual en el catálogo (Kalerm E50 Pro = 1)
     keyFacts: [
@@ -443,6 +450,7 @@ var MACHINES = [
     summary: "Café en grano y bebidas calientes con pantalla touch HD de 7\", 3 contenedores de solubles y rendimiento de hasta 300 tazas por día.",
     image: "assets/img/machines/necta-krea-touch.webp",
     ficha: "assets/img/fichas/necta-krea-touch-ficha.webp",
+    tutorialUrl: "",   // enlace de YouTube del video tutorial (vacío = «Próximamente»)
     tags: { coffee: "grano", milk: "soluble", touch: true, solubles: true, waterNetwork: false, bidon: false },
     displayScale: 1.4,   // escala visual en el catálogo (Kalerm E50 Pro = 1)
     keyFacts: [

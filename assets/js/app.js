@@ -345,6 +345,31 @@
   }
 
   /* ---------------- Ficha individual ---------------- */
+  /* ---------- Instructivo de uso y limpieza (componente reutilizable) ---------- */
+  // Solo se aceptan enlaces de YouTube; cualquier otro valor se trata como «sin video».
+  function youtubeUrl(u) {
+    return /^https:\/\/(www\.|m\.)?(youtube\.com\/(watch\?v=|embed\/|shorts\/)|youtu\.be\/)[\w-]{6,}/.test(String(u || "").trim()) ? String(u).trim() : "";
+  }
+  var PLAY_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 8.5v7l6-3.5z" fill="currentColor"/></svg>';
+  function instructivoHTML(m) {
+    var ins = window.INSTRUCTIVOS && INSTRUCTIVOS[m.id];
+    if (!ins) return "";
+    var url = youtubeUrl(m.tutorialUrl);
+    var video = url
+      ? '<a class="btn instr-video-btn" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + PLAY_ICON + "Video tutorial</a>"
+      : '<button type="button" class="btn instr-video-btn" disabled aria-disabled="true">' + PLAY_ICON + 'Video tutorial<span class="instr-soon">Próximamente</span></button>';
+    function group(title, steps) {
+      return '<details class="instr-group"><summary><span class="instr-sum-title">' + esc(title) + '</span><span class="instr-count">' + steps.length + " pasos</span>" +
+        '<svg class="instr-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>' +
+        '<ol class="instr-steps">' + steps.map(function (st) {
+          return "<li><strong>" + esc(st.titulo) + "</strong><p>" + esc(st.texto) + "</p></li>";
+        }).join("") + "</ol></details>";
+    }
+    return '<section class="section instructivo" aria-labelledby="h-instr"><div class="section-head"><h2 id="h-instr">Instructivo de uso y limpieza</h2></div>' +
+      '<div class="instr-video">' + video + "</div>" +
+      '<div class="instr-acc">' + group("Uso y funcionamiento", ins.uso) + group("Limpieza y mantenimiento", ins.limpieza) + "</div></section>";
+  }
+
   // Especificaciones ordenadas en tarjetas con filas homogéneas
   function stripP(v) { return isNE(v) || Array.isArray(v) ? v : String(v).replace(/\s*\([^)]*\)/g, "").trim(); }
   function specGroups(m) {
@@ -412,6 +437,7 @@
       '<section class="section" aria-labelledby="h-feat"><div class="section-head"><h2 id="h-feat">Características destacadas</h2></div>' +
         '<ul class="features">' + m.features.map(function (f) { return "<li>" + featureIcon(f) + "<span>" + esc(f) + "</span></li>"; }).join("") + "</ul></section>" +
 
+      instructivoHTML(m) +
       '<section class="section" aria-labelledby="h-media"><div class="section-head"><h2 id="h-media">Visualización y ficha técnica</h2></div>' +
         '<div class="media-grid">' +
           '<div class="media-card">' + viewerHTML(m) +

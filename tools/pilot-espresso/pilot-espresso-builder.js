@@ -2,7 +2,7 @@
    Pilot Espresso · Modelo 3D procedural (diseño Corporate Coffee)
    Referencias: fotografía de la ficha técnica (diseño: pantalla con logo
    Corporate Coffee, display «PILOT», rótulos, placa «Pilot ESPRESSO»,
-   franja azul, costados claros) y fotografías del fabricante iPilot
+   franja azul, cuerpo negro) y fotografías del fabricante iPilot
    (proporciones y volúmenes). Medidas de la ficha: 33 × 80 × 60 cm.
    Requiere: RoundedBoxGeometry + ModelKit.  Unidades: cm.  +Z = frente.
    ===================================================================== */
@@ -45,7 +45,7 @@
     /* ---------------- Materiales ---------------- */
     var BR = K.brushedMaps(41, 1500);
     var M = {
-      side: K.mat.phys({ name: "costado_claro", color: 0xe9eaec, roughness: 0.35, metalness: 0.05, clearcoat: 0.3, clearcoatRoughness: 0.3 }),
+      side: K.mat.phys({ name: "costado_negro", color: 0x141416, roughness: 0.42, metalness: 0.1, clearcoat: 0.3, clearcoatRoughness: 0.3 }),
       piano: K.mat.phys({ name: "negro_brillante", color: 0x060607, roughness: 0.1, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.04 }),
       glass: K.mat.phys({ name: "vidrio_frontal", color: 0x0b0c0e, roughness: 0.04, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.02 }),
       matte: K.mat.std({ name: "plastico_negro_mate", color: 0x111112, roughness: 0.8 }),

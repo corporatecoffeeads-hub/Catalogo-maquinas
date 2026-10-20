@@ -109,3 +109,10 @@ Cada ficha tiene este botón (`assets/js/office-preview.js`). El cliente toma un
 ## Fotografías
 
 Extraídas del PDF original de cada ficha (imagen de 1024 × 1536 px), recortadas y con el fondo eliminado automáticamente. En la Pilot Espresso el panel lateral blanco se recuperó con una máscara adicional por color. La resolución de origen es limitada (≈ 600–750 px de alto por máquina); si dispone de fotografías de producto en alta resolución, reemplace los archivos en `assets/img/machines/` manteniendo el mismo nombre.
+
+## Instructivo de uso y limpieza
+
+Cada ficha muestra la sección «Instructivo de uso y limpieza», con dos acordeones: «Uso y funcionamiento» y «Limpieza y mantenimiento».
+
+- Textos: `tools/instructivos/instructivos.md` (fuente). Después de editarlo, ejecutar `python3 tools/instructivos/build_instructivos.py` para regenerar `assets/js/instructivos.js`.
+- Video tutorial: en `assets/js/data.js`, completar `tutorialUrl` de la máquina con un enlace de YouTube, por ejemplo `tutorialUrl: "https://www.youtube.com/watch?v=XXXXXXXXXXX"`. Mientras esté vacío, el botón se muestra como «Próximamente» y no realiza ninguna acción. Solo se aceptan enlaces de youtube.com o youtu.be.

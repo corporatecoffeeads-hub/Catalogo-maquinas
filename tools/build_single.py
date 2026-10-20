@@ -24,6 +24,7 @@ for f in ["kalerm-e50/RoundedBoxGeometry.js", "model-kit.js", "kalerm-e50/kalerm
 html = re.sub(r'"(assets/img/[^"]+)"', inline, html)
 html = html.replace('<link rel="stylesheet" href="assets/css/styles.css">', "<style>\n" + css + "\n</style>")
 html = html.replace('<script src="assets/js/data.js"></script>', "<script>\n" + data + "\n</script>")
+html = html.replace('<script src="assets/js/instructivos.js"></script>', "<script>\n" + (root / "assets/js/instructivos.js").read_text(encoding="utf-8") + "\n</script>")
 html = html.replace('<script src="assets/js/viewer3d.js"></script>', vendor + "<script>\n" + viewer + "\n</script>")
 html = html.replace('<script src="assets/js/office-preview.js"></script>', "<script>\n" + (root / "assets/js/office-preview.js").read_text(encoding="utf-8") + "\n</script>")
 html = html.replace('<script src="assets/js/app.js"></script>', "<script>\n" + app + "\n</script>")
