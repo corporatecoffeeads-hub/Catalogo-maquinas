@@ -563,3 +563,14 @@ a.instr-video-btn:hover { background: var(--ink-2); }
 .instr-steps strong { font-weight: 600; }
 .instr-steps p { margin-top: .2rem; color: var(--ink-2); font-size: .96rem; max-width: 75ch; }
 @media (max-width: 720px) { .instr-group summary { padding: .9rem 1rem; } .instr-steps { padding: 0 1rem 1rem; } }
+
+/* Sección final: solo la ficha técnica original */
+.media-grid.media-single { grid-template-columns: minmax(0, 520px); }
+
+/* Especificaciones desplegables */
+.spec-details summary { padding: 1rem 1.25rem; }
+.spec-details-body { padding: 0 1.25rem 1.25rem; }
+.spec-details-body .section-note { margin-bottom: 1rem; }
+.spec-details .spec-card { background: var(--paper); }
+#h-specs + .btn { white-space: nowrap; }
+@media (max-width: 720px) { .spec-details-body { padding: 0 .75rem 1rem; } }

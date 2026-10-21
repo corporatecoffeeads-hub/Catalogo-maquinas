@@ -409,7 +409,6 @@
             '<div class="office-cta-text"><strong>Revisa cómo se vería la máquina en tu oficina</strong><span>Toma o sube una foto de tu espacio y ubica la máquina en segundos.</span></div>' +
             '<div class="office-cta-actions"><button type="button" class="btn office-btn-main" data-office="camera">Tomar foto</button><button type="button" class="btn office-btn-alt" data-office="upload">Subir foto</button></div>' +
           "</div>" +
-          '<ul class="highlights">' + m.features.slice(0, 6).map(function (f) { return "<li>" + featureIcon(f) + "<span>" + esc(f) + "</span></li>"; }).join("") + "</ul>" +
           (!ENABLE_COMPARE ? "" : '<div class="detail-actions">' +
             '<button class="btn btn-ghost" type="button" id="detailCompare" data-compare="' + m.id + '" aria-pressed="' + on + '">' + (on ? ICON.check + "En el comparador" : ICON.plus + "Agregar al comparador") + "</button>" +
             '<div class="compare-with"><label for="cmpWith">Comparar con</label>' +
@@ -420,33 +419,32 @@
         "</div>" +
       "</section>" +
 
+      '<section class="section" aria-labelledby="h-feat"><div class="section-head"><h2 id="h-feat">Características destacadas</h2></div>' +
+        '<ul class="features">' + m.features.map(function (f) { return "<li>" + featureIcon(f) + "<span>" + esc(f) + "</span></li>"; }).join("") + "</ul></section>" +
+
+      '<section class="section" aria-labelledby="h-drinks"><div class="section-head"><h2 id="h-drinks">Bebidas disponibles</h2>' +
+        '<p class="section-note">' + m.drinks.length + " bebidas, con los nombres indicados en la ficha.</p></div>" +
+        '<ul class="drinks">' + m.drinks.map(function (d) { return '<li class="drink">' + drinkIcon(d) + "<span>" + esc(d) + "</span></li>"; }).join("") + "</ul></section>" +
+
+      instructivoHTML(m) +
+
       '<section class="section" aria-labelledby="h-specs"><div class="section-head"><h2 id="h-specs">Especificaciones técnicas</h2>' +
-        '<p class="section-note">«No especificado» indica que la ficha técnica no informa el dato; no significa que la función no exista.</p></div>' +
+        '<button class="btn btn-ghost" type="button" data-zoom="ficha">Ver ficha técnica original</button></div>' +
+        '<details class="instr-group spec-details"><summary><span class="instr-sum-title">Ver todas las especificaciones</span>' +
+          '<span class="instr-count">' + specGroups(m).length + ' grupos</span>' +
+          '<svg class="instr-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>' +
+        '<div class="spec-details-body"><p class="section-note">«No especificado» indica que la ficha técnica no informa el dato; no significa que la función no exista.</p>' +
         '<div class="spec-grid">' + specGroups(m).map(function (g) {
           return '<div class="spec-card' + (g[2] ? " wide" : "") + '"><h3>' + g[0] + '</h3><dl class="spec-rows">' +
             g[1].map(function (r) {
               var v = Array.isArray(r[1]) && r[1].length ? "<ul>" + r[1].map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>" : val(r[1]);
               return "<div><dt>" + esc(r[0]) + "</dt><dd>" + v + "</dd></div>";
             }).join("") + "</dl></div>";
-        }).join("") + "</div></section>" +
+        }).join("") + "</div></div></details></section>" +
 
-      '<section class="section" aria-labelledby="h-drinks"><div class="section-head"><h2 id="h-drinks">Bebidas disponibles</h2>' +
-        '<p class="section-note">' + m.drinks.length + " bebidas, con los nombres indicados en la ficha.</p></div>" +
-        '<ul class="drinks">' + m.drinks.map(function (d) { return '<li class="drink">' + drinkIcon(d) + "<span>" + esc(d) + "</span></li>"; }).join("") + "</ul></section>" +
 
-      '<section class="section" aria-labelledby="h-feat"><div class="section-head"><h2 id="h-feat">Características destacadas</h2></div>' +
-        '<ul class="features">' + m.features.map(function (f) { return "<li>" + featureIcon(f) + "<span>" + esc(f) + "</span></li>"; }).join("") + "</ul></section>" +
 
-      instructivoHTML(m) +
-      '<section class="section" aria-labelledby="h-media"><div class="section-head"><h2 id="h-media">Visualización y ficha técnica</h2></div>' +
-        '<div class="media-grid">' +
-          '<div class="media-card">' + viewerHTML(m) +
-            '<div class="media-card-body"><div><h3>Vista 360° o modelo 3D</h3><p>' + (m.media.model3d ? "Modelo 3D interactivo disponible." : m.media.spin360.length ? "Arrastra para girar el equipo." : "Pendiente de material fotográfico o modelo 3D.") + "</p></div>" +
-              (m.media.model3d ? '<button class="btn btn-ghost" type="button" id="open3d">Abrir vista 3D</button>' : "") + "</div></div>" +
-          '<div class="media-card"><div class="stage"><img class="ficha-thumb" src="' + m.ficha + '" alt="Ficha técnica original de la ' + esc(m.name) + '" loading="lazy"></div>' +
-            '<div class="media-card-body"><div><h3>Ficha técnica original</h3><p>Documento fuente de esta información.</p></div>' +
-            '<button class="btn btn-ghost" type="button" data-zoom="ficha">Ver ficha</button></div></div>' +
-        "</div></section>" +
+
 
       "</div></div>";
 
